@@ -6,10 +6,14 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <CreatePatient />
+        
       </header>
+      <h1>Patient Registraion Form</h1>
+      <CreatePatient />
+    
     </div>
   );
+      
 }
 
 export default App;

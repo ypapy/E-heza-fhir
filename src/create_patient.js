@@ -10,13 +10,15 @@ const CreatePatient = () => {
     const [country, setCountry] = useState("");
     const [address, setAddress] = useState("");
     const [email, setEmail] = useState("");
+    const [emergencyContact, setEmergencyContact] = useState("");
+    const [emergencyContactPhone, setEmergencyContactPhone] = useState("");
     const [mobileNumber, setMobileNumber] = useState("");
     const [message, setMessage] = useState("");
 
     let handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          let res = await fetch("http://hapi.fhir.org/baseR4/Patient", {
+          let res = await fetch("http://localhost:8080/Patient/", {
             method: "POST",
             body: JSON.stringify({
                 "resourceType": "Patient",
@@ -78,13 +80,15 @@ const CreatePatient = () => {
     return ( 
         <div className="CreatePatient">
             <form onSubmit={handleSubmit}>
+                <label htmlFor="">First Names</label>
                 <input
                 type="text"
                 value={firstNames}
                 placeholder="First Names"
                 onChange={(e) => setFirstNames(e.target.value)}
                 />
-
+                
+                <label htmlFor="">Lastname</label>
                 <input
                 type="text"
                 value={lastName}
@@ -92,6 +96,7 @@ const CreatePatient = () => {
                 onChange={(e) => setLastName(e.target.value)}
                 />
 
+                <label htmlFor="">Gender</label>
                 <input
                 type="text"
                 value={gender}
@@ -99,13 +104,15 @@ const CreatePatient = () => {
                 onChange={(e) => setGender(e.target.value)} 
                 />
 
+                <label htmlFor="">Date of Birth</label>
                 <input
-                type="text"
+                type="date"
                 value={birthDate}
                 placeholder="Birth Date"
                 onChange={(e) => setBirthDate(e.target.value)}
                 />  
 
+                <label htmlFor="">Address</label>
                 <input
                 type="text"
                 value={address}
@@ -113,6 +120,7 @@ const CreatePatient = () => {
                 onChange={(e) => setAddress(e.target.value)}
                 />
 
+                <label htmlFor="">City</label>
                 <input
                 type="text"
                 value={city}
@@ -120,13 +128,16 @@ const CreatePatient = () => {
                 onChange={(e) => setCity(e.target.value)}
                 /> 
 
+                <label htmlFor="">District</label>
                 <input
+                label="District"
                 type="text"
                 value={district}
                 placeholder="District"
                 onChange={(e) => setDistrict(e.target.value)}
                 />
 
+                <label htmlFor="">Country</label>
                 <input
                 type="text"
                 value={country}
@@ -134,18 +145,36 @@ const CreatePatient = () => {
                 onChange={(e) => setCountry(e.target.value)}
                 />
 
+                <label htmlFor="">Phone Number</label>
                 <input
-                type="text"
+                type="tel"
                 value={mobileNumber}
                 placeholder="Mobile Number"
                 onChange={(e) => setMobileNumber(e.target.value)}
                 />
 
+                <label htmlFor="">Email</label>
                 <input
-                type="text"
+                type="email"
                 value={email}
                 placeholder="Email"
                 onChange={(e) => setEmail(e.target.value)}
+                />
+
+                <label htmlFor="">Emergency Contact</label>
+                <input
+                type="text"
+                value={emergencyContact}
+                placeholder="Emergency Contact"
+                onChange={(e) => setEmergencyContact(e.target.value)}
+                />
+
+                <label htmlFor="">Emergency Contact Phone Number</label>
+                <input
+                type="tel"
+                value={emergencyContactPhone}
+                placeholder="Emergency Contact Phone"
+                onChange={(e) => setEmergencyContactPhone(e.target.value)}
                 />
 
                 <button type="submit">Create Patient</button>
