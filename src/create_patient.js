@@ -1,8 +1,7 @@
 import { useState } from "react";
 
 const CreatePatient = () => {
-    const [firstNames, setFirstNames] = useState("");
-    const [lastName, setLastName] = useState("");
+    const [name, setName] = useState("");
     const [gender, setGender] = useState("");
     const [birthDate, setBirthDate] = useState("");
     const [city, setCity] = useState("");
@@ -18,47 +17,47 @@ const CreatePatient = () => {
     let handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          let res = await fetch("http://localhost:8080/Patient/", {
+          let res = await fetch("http://localhost:61958/fhir/Patient", {
             method: "POST",
+            headers: {'content-type': 'application/json'},
             body: JSON.stringify({
-                "resourceType": "Patient",
-                "name": [
-                    {
-                        "use": "official",
-                        "given": [firstNames],
-                        "family": lastName
-                    }
-                ],
-                "gender": gender,
-                "birthDate": birthDate,
-                "telecom": [
-                    {
-                        "value": mobileNumber,
-                        "use": "mobile",
-                        "system": "phone"
-                    },
-                    {
-                        "system": "email",
-                        "value": email
-                    }
-                ],
-                "address": [
-                    {
-                        "city": city,
-                        "district": district,
-                        "country": country,
-                        "line": [address]
-                    }
-                ]
-            }),
+              "resourceType": "Patient",
+              "name": [
+                  {
+                      "use": "official",
+                      "given": ["Kwaku Tsyops"]
+                  }
+              ],
+              "gender": "female",
+              "birthDate": "1998-06-22",
+              "telecom": [
+                  {
+                      "value": "0791591978",
+                      "use": "mobile",
+                      "system": "phone"
+                  },
+                  {
+                      "system": "email",
+                      "value": "ktsyops@gmail.com"
+                  }
+              ],
+              "address": [
+                  {
+                      "city": "Kigali",
+                      "district": "Gasabo",
+                      "country": "Rwanda",
+                      "postalCode": "00250",
+                      "line": ["14 KG 71 Street"]
+                  }
+              ]
+          }),
 
           });
 
-          let resJson = await res.json();
+          // let resJson = await res.json();
 
           if (res.status === 200) {
-            setFirstNames("");
-            lastName("");
+            name("");
             setGender("");
             setBirthDate("");
             setCity("");
@@ -80,20 +79,12 @@ const CreatePatient = () => {
     return ( 
         <div className="CreatePatient">
             <form onSubmit={handleSubmit}>
-                <label htmlFor="">First Names</label>
+                <label htmlFor="">Name</label>
                 <input
                 type="text"
-                value={firstNames}
+                value={name}
                 placeholder="First Names"
-                onChange={(e) => setFirstNames(e.target.value)}
-                />
-                
-                <label htmlFor="">Lastname</label>
-                <input
-                type="text"
-                value={lastName}
-                placeholder="Last Name"
-                onChange={(e) => setLastName(e.target.value)}
+                onChange={(e) => setName(e.target.value)}
                 />
 
                 <label htmlFor="">Gender</label>
