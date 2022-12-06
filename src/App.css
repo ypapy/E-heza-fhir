@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  margin-top: 10px;
+  align-items: center;
 }
 
 .App-logo {
@@ -26,6 +28,11 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.tablePatients {
+  align-items: center;
+  width: fit-content;
 }
 
 @keyframes App-logo-spin {
