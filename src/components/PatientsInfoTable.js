@@ -51,8 +51,11 @@ export default function PatientsInfoTable(props) {
       <Table>
         <TableHead>
           <TableRow>
-            <StyledTableCell>Patient name</StyledTableCell>
-            <StyledTableCell>View Details</StyledTableCell>
+            <StyledTableCell>FirstName</StyledTableCell>
+            <StyledTableCell></StyledTableCell>
+            <StyledTableCell>LastName</StyledTableCell>
+            <StyledTableCell></StyledTableCell>
+            <StyledTableCell>Details</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -61,7 +64,12 @@ export default function PatientsInfoTable(props) {
               <StyledTableCell component="th" scope="row">
                 {row.resource.name[0].family+" "+row.resource.name[0].given[0]}
               </StyledTableCell>
-              <StyledTableCell> <Button href={row.fullUrl} variant="contained">View details</Button></StyledTableCell>
+              <StyledTableCell></StyledTableCell>
+              <StyledTableCell component="th" scope="row">
+                {row.resource.name[0].given[0]+" "+row.resource.name[0].given[0]}
+              </StyledTableCell>
+              <StyledTableCell></StyledTableCell>
+              <StyledTableCell> <Button href={`patientDetails/${row.resource.id}`} variant="contained">View details</Button></StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>
