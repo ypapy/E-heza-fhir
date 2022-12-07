@@ -21,7 +21,7 @@ button {
   cursor: pointer;
 }
 button:hover {
-  background-color: #c5c5c5;
+  background-color: #1b238d;
 }
 .message {
   font-size: 1.2em;

@@ -1,12 +1,13 @@
 import { useState } from "react";
 
+
 const CreatePatient = () => {
     const [name, setName] = useState("");
     const [gender, setGender] = useState("");
     const [birthDate, setBirthDate] = useState("");
     const [city, setCity] = useState("");
     const [district, setDistrict] = useState("");
-    const [country, setCountry] = useState("");
+    const [state, setState] = useState("");
     const [address, setAddress] = useState("");
     const [email, setEmail] = useState("");
     const [emergencyContact, setEmergencyContact] = useState("");
@@ -17,52 +18,69 @@ const CreatePatient = () => {
     let handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          let res = await fetch("http://localhost:61958/fhir/Patient", {
+          let res = await fetch("http://localhost:57916/fhir/Patient", {
             method: "POST",
             headers: {'content-type': 'application/json'},
             body: JSON.stringify({
               "resourceType": "Patient",
+              "id": mobileNumber,
+              "active": true,
               "name": [
-                  {
-                      "use": "official",
-                      "given": ["Kwaku Tsyops"]
-                  }
+                {
+                  "use": "official",
+                  "given": [
+                    name
+                  ]
+                },
               ],
-              "gender": "female",
-              "birthDate": "1998-06-22",
               "telecom": [
-                  {
-                      "value": "0791591978",
-                      "use": "mobile",
-                      "system": "phone"
-                  },
-                  {
-                      "system": "email",
-                      "value": "ktsyops@gmail.com"
-                  }
+                {
+                  "system": "phone",
+                  "value": mobileNumber,
+                  "use": "mobile",
+                },
               ],
+              "gender": gender,
+              "birthDate": birthDate,
               "address": [
-                  {
-                      "city": "Kigali",
-                      "district": "Gasabo",
-                      "country": "Rwanda",
-                      "postalCode": "00250",
-                      "line": ["14 KG 71 Street"]
-                  }
-              ]
+                {
+                  "use": "home",
+                  "line": [
+                    address
+                  ],
+                  "city": city,
+                  "district": district,
+                  "state": state,
+                }
+              ],
+              "contact": [
+                {
+                  "name": {
+                    "given": [
+                      emergencyContact
+                    ]
+                  },
+                  "telecom": [
+                    {
+                      "system": "phone",
+                      "value": emergencyContactPhone
+                    }
+                  ],
+                }
+              ],  
           }),
 
           });
 
           // let resJson = await res.json();
 
-          if (res.status === 200) {
+          if (res.status === 201) {
             name("");
             setGender("");
             setBirthDate("");
             setCity("");
             setDistrict("");
-            setCountry("");
+            setState("");
             setAddress("");
             setEmail("");
             setMobileNumber("");
@@ -78,6 +96,7 @@ const CreatePatient = () => {
 
     return ( 
         <div className="CreatePatient">
+          <h1>Register Patient</h1>
             <form onSubmit={handleSubmit}>
                 <label htmlFor="">Name</label>
                 <input
@@ -128,12 +147,12 @@ const CreatePatient = () => {
                 onChange={(e) => setDistrict(e.target.value)}
                 />
 
-                <label htmlFor="">Country</label>
+                <label htmlFor="">State</label>
                 <input
                 type="text"
-                value={country}
-                placeholder="Country"
-                onChange={(e) => setCountry(e.target.value)}
+                value={state}
+                placeholder="State"
+                onChange={(e) => setState(e.target.value)}
                 />
 
                 <label htmlFor="">Phone Number</label>
