@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import PatientsInfoTable from './PatientsInfoTable';
 
 const GetAllPatients = () => {
-    const url = "http://localhost:57916/fhir/Patient"
+    const url = "http://localhost:63993/fhir/Patient"
     const [patients, setPatients] = useState([]);
     useEffect(()=>{
         axios.get(url)
@@ -15,7 +15,14 @@ const GetAllPatients = () => {
     }, [patients])
   
     return (
+        
         <>
+        <div className="register-patient">
+        <a href="./createPatient">
+        <button>Register New Patient</button>
+        </a>
+        </div>
+        
          {patients.length!==0 && <PatientsInfoTable patients={patients}/>}
             
         </>

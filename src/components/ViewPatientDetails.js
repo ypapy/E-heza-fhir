@@ -6,7 +6,7 @@ import axios from 'axios';
 // import { Phone } from '@mui/icons-material';
 
 export default function ViewPatientDetails(props) {
-    // const url = "http://localhost:57916/fhir/Patient"
+    // const url = "http://localhost:63993/fhir/Patient"
     const { id } = useParams()
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
@@ -21,7 +21,7 @@ export default function ViewPatientDetails(props) {
     const [city, setCity] = useState("")
     const [streetNo, setStreetNo] = useState("")
     useEffect(() => {
-        const url = `http://localhost:57916/fhir/Patient` + id
+        const url = `http://localhost:63993/fhir/Patient` + id
         console.log(url)
         axios.get(url)
             .then(response => {

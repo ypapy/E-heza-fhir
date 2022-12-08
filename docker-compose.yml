@@ -15,11 +15,11 @@ services:
     fhir-db:
         image: postgres
         volumes:
-        - fhir-db-data:/var/lib/postgresql/data
+        - db-data:/var/lib/postgresql/data
         environment:
             POSTGRES_PASSWORD: admin
             POSTGRES_USER: admin
             POSTGRES_DB: hapi_r4
 
 volumes:
-    fhir-db-data:
+    db-data:

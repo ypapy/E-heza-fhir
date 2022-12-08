@@ -19,7 +19,7 @@ const CreatePatient = () => {
     let handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          let res = await fetch("http://localhost:57916/fhir/Patient", {
+          let res = await fetch("http://localhost:63993/fhir/Patient", {
             method: "POST",
             headers: {'content-type': 'application/json'},
             body: JSON.stringify({
@@ -32,18 +32,18 @@ const CreatePatient = () => {
                   "given": [
                     firstName
                   ]
-                },
+                }
               ],
               "telecom": [
                 {
                   "system": "phone",
                   "value": mobileNumber,
-                  "use": "mobile",
+                  "use": "mobile"
                 },
                 {
                   "system": "email",
                   "value": email
-              }
+                }
               ],
               "gender": gender,
               "birthDate": birthDate,
@@ -55,7 +55,7 @@ const CreatePatient = () => {
                   ],
                   "city": city,
                   "district": district,
-                  "state": state,
+                  "state": state
                 }
               ],
               "contact": [
@@ -70,10 +70,10 @@ const CreatePatient = () => {
                       "system": "phone",
                       "value": emergencyContactPhone
                     }
-                  ],
+                  ]
                 }
-              ],  
-          }),
+              ]
+            }),
 
           });
 
