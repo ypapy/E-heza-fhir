@@ -54,10 +54,10 @@ const RecordHeartRate = () => {
         }),
       });
 
-      if (res.status === "201 Created") {
+      if (res.status === 201) {
         setHeartRate("");
         setId("");
-        setMessage("User created successfully");
+        setMessage("Success");
       } else {
         setMessage("Some error occured");
       }

@@ -63,10 +63,10 @@ const RecordWeight = () => {
         }),
       });
 
-      if (res.status === "201 Created") {
+      if (res.status === 201) {
         setWeight("");
         setId("");
-        setMessage("User created successfully");
+        setMessage("Success");
       } else {
         setMessage("Some error occured");
       }

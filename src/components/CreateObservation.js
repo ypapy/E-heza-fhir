@@ -3,34 +3,31 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 const CreateObservation = () => {
   return (
-    (
-      <div className="header">
-        <h2>Select Observation to Record</h2>
-      </div>
-    ),
-    (
-      <ButtonGroup variant="contained" aria-label="outlined button group">
+    <ButtonGroup variant="contained" aria-label="outlined button group">
+      <div>
         <Button variant="contained" href="/CreateObservation/RecordTemperature">
           Temperature
         </Button>
+      </div>
 
-        <div>
-          <Button variant="contained" href="/CreateObservation/RecordWeight">
-            Weight
-          </Button>
-        </div>
+      <div>
+        <Button variant="contained" href="/CreateObservation/RecordWeight">
+          Weight
+        </Button>
+      </div>
 
-        <div>
-          <Button variant="contained" href="/CreateObservation/RecordHeight">
-            Height
-          </Button>
-        </div>
+      <div>
+        <Button variant="contained" href="/CreateObservation/RecordHeight">
+          Height
+        </Button>
+      </div>
 
+      <div>
         <Button variant="contained" href="/CreateObservation/RecordHeartRate">
           Heart Rate
         </Button>
-      </ButtonGroup>
-    )
+      </div>
+    </ButtonGroup>
   );
 };
 

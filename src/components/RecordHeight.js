@@ -55,10 +55,10 @@ const RecordHeight = () => {
         }),
       });
 
-      if (res.status === "201 Created") {
+      if (res.status === 201) {
         setHeight("");
         setId("");
-        setMessage("User created successfully");
+        setMessage("Success");
       } else {
         setMessage("Some error occured");
       }
