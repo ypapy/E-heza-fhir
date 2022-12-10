@@ -1,9 +1,16 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import Head from "next/head";
+import NextLink from "next/link";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box, Button, Container } from "@mui/material";
 
-const RecordWeight = () => {
+const RecordWeight = (props) => {
   const [weight, setWeight] = useState("");
   const [message, setMessage] = useState("");
-  const [id, setId] = useState("");
+  const { id } = useParams();
+
+  const reference = "Patient/" + id;
 
   let handleSubmit = async (e) => {
     e.preventDefault();
@@ -51,7 +58,7 @@ const RecordWeight = () => {
             ],
           },
           subject: {
-            reference: "Patient"/id,
+            reference: reference,
           },
           effectiveDateTime: "2022-03-28",
           valueQuantity: {
@@ -65,7 +72,6 @@ const RecordWeight = () => {
 
       if (res.status === 201) {
         setWeight("");
-        setId("");
         setMessage("Success");
       } else {
         setMessage("Some error occured");
@@ -76,22 +82,55 @@ const RecordWeight = () => {
   };
 
   return (
-    <div className="record-temperature">
-      <h1>Enter Weight Value</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="">Weight</label>
-        <input
-          type="text"
-          value={weight}
-          placeholder="Temperature"
-          onChange={(e) => setWeight(e.target.value)}
-        />
+    <>
+      <Head>
+        <title>Weight</title>
+      </Head>
+      <Box
+        component="main"
+        sx={{
+          alignItems: "center",
+          display: "flex",
+          flexGrow: 1,
+          minHeight: "100%",
+        }}
+      >
+        <Container maxWidth="sm">
+          <NextLink href="/" passHref>
+            <Button
+              component="a"
+              startIcon={<ArrowBackIcon fontSize="small" />}
+            >
+              All Patients
+            </Button>
+          </NextLink>
 
-        <button type="submit">Submit</button>
+          <h1>Enter Weight Value</h1>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="">Weight</label>
+            <input
+              type="text"
+              value={weight}
+              placeholder="Weight"
+              onChange={(e) => setWeight(e.target.value)}
+            />
 
-        <div className="message">{message ? <p>{message}</p> : null}</div>
-      </form>
-    </div>
+            <Box sx={{ py: 2 }}>
+              <Button
+                color="primary"
+                size="medium"
+                type="submit"
+                variant="contained"
+              >
+                Submit
+              </Button>
+            </Box>
+
+            <div className="message">{message ? <p>{message}</p> : null}</div>
+          </form>
+        </Container>
+      </Box>
+    </>
   );
 };
 

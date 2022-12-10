@@ -1,9 +1,16 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import Head from "next/head";
+import NextLink from "next/link";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box, Button, Container } from "@mui/material";
 
 const RecordHeartRate = () => {
   const [heartRate, setHeartRate] = useState("");
   const [message, setMessage] = useState("");
-  const [id, setId] = useState("");
+  const { id } = useParams();
+
+  const reference = "Patient/" + id;
 
   let handleSubmit = async (e) => {
     e.preventDefault();
@@ -42,7 +49,7 @@ const RecordHeartRate = () => {
             text: "Body height",
           },
           subject: {
-            reference: "Patient" / id,
+            reference: reference,
           },
           effectiveDateTime: "2022-07-02",
           valueQuantity: {
@@ -56,7 +63,6 @@ const RecordHeartRate = () => {
 
       if (res.status === 201) {
         setHeartRate("");
-        setId("");
         setMessage("Success");
       } else {
         setMessage("Some error occured");
@@ -67,22 +73,55 @@ const RecordHeartRate = () => {
   };
 
   return (
-    <div className="record-temperature">
-      <h1>Enter Heart Rate</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="">Heart Rate</label>
-        <input
-          type="text"
-          value={heartRate}
-          placeholder="Temperature"
-          onChange={(e) => setHeartRate(e.target.value)}
-        />
+    <>
+      <Head>
+        <title>Heart Rate</title>
+      </Head>
+      <Box
+        component="main"
+        sx={{
+          alignItems: "center",
+          display: "flex",
+          flexGrow: 1,
+          minHeight: "100%",
+        }}
+      >
+        <Container maxWidth="sm">
+          <NextLink href="/" passHref>
+            <Button
+              component="a"
+              startIcon={<ArrowBackIcon fontSize="small" />}
+            >
+              All Patients
+            </Button>
+          </NextLink>
 
-        <button type="submit">Submit</button>
+          <h1>Enter Heart Rate</h1>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="">Heart Rate</label>
+            <input
+              type="text"
+              value={heartRate}
+              placeholder="Heart Rate"
+              onChange={(e) => setHeartRate(e.target.value)}
+            />
 
-        <div className="message">{message ? <p>{message}</p> : null}</div>
-      </form>
-    </div>
+            <Box sx={{ py: 2 }}>
+              <Button
+                color="primary"
+                size="medium"
+                type="submit"
+                variant="contained"
+              >
+                Submit
+              </Button>
+            </Box>
+
+            <div className="message">{message ? <p>{message}</p> : null}</div>
+          </form>
+        </Container>
+      </Box>
+    </>
   );
 };
 

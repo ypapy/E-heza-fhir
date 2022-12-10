@@ -1,9 +1,16 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import Head from "next/head";
+import NextLink from "next/link";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box, Button, Container } from "@mui/material";
 
 const RecordTemperature = () => {
   const [temperature, setTemperature] = useState("");
   const [message, setMessage] = useState("");
-  const [id, setId] = useState("");
+  const { id } = useParams();
+
+  const reference = "Patient/" + id;
 
   let handleSubmit = async (e) => {
     e.preventDefault();
@@ -38,7 +45,7 @@ const RecordTemperature = () => {
             text: "Body temperature",
           },
           subject: {
-            reference: "Patient" / id,
+            reference: reference,
           },
           valueQuantity: {
             value: temperature,
@@ -50,7 +57,6 @@ const RecordTemperature = () => {
 
       if (res.status === 201) {
         setTemperature("");
-        setId("");
         setMessage("Success");
       } else {
         setMessage("Some error occured");
@@ -61,22 +67,55 @@ const RecordTemperature = () => {
   };
 
   return (
-    <div className="record-temperature">
-      <h1>Enter Temperature Value</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="">Temperature</label>
-        <input
-          type="text"
-          value={temperature}
-          placeholder="Temperature"
-          onChange={(e) => setTemperature(e.target.value)}
-        />
+    <>
+      <Head>
+        <title>Temperature</title>
+      </Head>
+      <Box
+        component="main"
+        sx={{
+          alignItems: "center",
+          display: "flex",
+          flexGrow: 1,
+          minHeight: "100%",
+        }}
+      >
+        <Container maxWidth="sm">
+          <NextLink href="/" passHref>
+            <Button
+              component="a"
+              startIcon={<ArrowBackIcon fontSize="small" />}
+            >
+              All Patients
+            </Button>
+          </NextLink>
 
-        <button type="submit">Submit</button>
+          <h1>Enter Temperature Value</h1>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="">Temperature</label>
+            <input
+              type="text"
+              value={temperature}
+              placeholder="Temperature"
+              onChange={(e) => setTemperature(e.target.value)}
+            />
 
-        <div className="message">{message ? <p>{message}</p> : null}</div>
-      </form>
-    </div>
+            <Box sx={{ py: 2 }}>
+              <Button
+                color="primary"
+                size="medium"
+                type="submit"
+                variant="contained"
+              >
+                Submit
+              </Button>
+            </Box>
+
+            <div className="message">{message ? <p>{message}</p> : null}</div>
+          </form>
+        </Container>
+      </Box>
+    </>
   );
 };
 

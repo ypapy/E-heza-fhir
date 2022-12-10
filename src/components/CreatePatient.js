@@ -1,4 +1,8 @@
 import { useState } from "react";
+import Head from "next/head";
+import NextLink from "next/link";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box, Button, Container } from "@mui/material";
 
 const CreatePatient = () => {
   const [firstName, setFirstName] = useState("");
@@ -69,11 +73,9 @@ const CreatePatient = () => {
         }),
       });
 
-      // let resJson = await res.json();
-
       if (res.status === "201 Created") {
-        firstName("");
-        lastName("");
+        setFirstName("");
+        setLastName("");
         setGender("");
         setBirthDate("");
         setCity("");
@@ -82,6 +84,8 @@ const CreatePatient = () => {
         setStreetNo("");
         setEmail("");
         setMobileNumber("");
+        setEmergencyContact("");
+        setEmergencyContactPhone("");
         setMessage("User created successfully");
       } else {
         setMessage("Some error occured");
@@ -92,111 +96,143 @@ const CreatePatient = () => {
   };
 
   return (
-    <div className="CreatePatient">
-      <h1>Register Patient</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="">Name</label>
-        <input
-          type="text"
-          value={firstName}
-          placeholder="First Names"
-          onChange={(e) => setFirstName(e.target.value)}
-        />
+    <>
+      <Head>
+        <title>Register New Patient</title>
+      </Head>
+      <Box
+        component="main"
+        sx={{
+          alignItems: "center",
+          display: "flex",
+          flexGrow: 1,
+          minHeight: "100%",
+        }}
+      >
+        <Container maxWidth="sm">
+          <NextLink href="/" passHref>
+            <Button
+              component="a"
+              startIcon={<ArrowBackIcon fontSize="small" />}
+            >
+              All Patients
+            </Button>
+          </NextLink>
+          <h1>Register Patient</h1>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="">Name</label>
+            <input
+              type="text"
+              value={firstName}
+              placeholder="First Names"
+              onChange={(e) => setFirstName(e.target.value)}
+            />
 
-        <label htmlFor="">Name</label>
-        <input
-          type="text"
-          value={lastName}
-          placeholder="Last Name"
-          onChange={(e) => setLastName(e.target.value)}
-        />
+            <label htmlFor="">Name</label>
+            <input
+              type="text"
+              value={lastName}
+              placeholder="Last Name"
+              onChange={(e) => setLastName(e.target.value)}
+            />
 
-        <label htmlFor="">Gender</label>
-        <input
-          type="text"
-          value={gender}
-          placeholder="Gender"
-          onChange={(e) => setGender(e.target.value)}
-        />
+            <label htmlFor="">Gender</label>
+            <input
+              type="text"
+              value={gender}
+              placeholder="Gender"
+              onChange={(e) => setGender(e.target.value)}
+            />
 
-        <label htmlFor="">Date of Birth</label>
-        <input
-          type="date"
-          value={birthDate}
-          placeholder="Birth Date"
-          onChange={(e) => setBirthDate(e.target.value)}
-        />
+            <label htmlFor="">Date of Birth</label>
+            <input
+              type="date"
+              value={birthDate}
+              placeholder="Birth Date"
+              onChange={(e) => setBirthDate(e.target.value)}
+            />
 
-        <label htmlFor="">Address</label>
-        <input
-          type="text"
-          value={streetNo}
-          placeholder="Address"
-          onChange={(e) => setStreetNo(e.target.value)}
-        />
+            <label htmlFor="">Address</label>
+            <input
+              type="text"
+              value={streetNo}
+              placeholder="Address"
+              onChange={(e) => setStreetNo(e.target.value)}
+            />
 
-        <label htmlFor="">City</label>
-        <input
-          type="text"
-          value={city}
-          placeholder="City"
-          onChange={(e) => setCity(e.target.value)}
-        />
+            <label htmlFor="">City</label>
+            <input
+              type="text"
+              value={city}
+              placeholder="City"
+              onChange={(e) => setCity(e.target.value)}
+            />
 
-        <label htmlFor="">District</label>
-        <input
-          label="District"
-          type="text"
-          value={district}
-          placeholder="District"
-          onChange={(e) => setDistrict(e.target.value)}
-        />
+            <label htmlFor="">District</label>
+            <input
+              label="District"
+              type="text"
+              value={district}
+              placeholder="District"
+              onChange={(e) => setDistrict(e.target.value)}
+            />
 
-        <label htmlFor="">State</label>
-        <input
-          type="text"
-          value={state}
-          placeholder="State"
-          onChange={(e) => setState(e.target.value)}
-        />
+            <label htmlFor="">State</label>
+            <input
+              type="text"
+              value={state}
+              placeholder="State"
+              onChange={(e) => setState(e.target.value)}
+            />
 
-        <label htmlFor="">Phone Number</label>
-        <input
-          type="tel"
-          value={mobileNumber}
-          placeholder="Mobile Number"
-          onChange={(e) => setMobileNumber(e.target.value)}
-        />
+            <label htmlFor="">Phone Number</label>
+            <input
+              type="tel"
+              value={mobileNumber}
+              placeholder="Mobile Number"
+              onChange={(e) => setMobileNumber(e.target.value)}
+            />
 
-        <label htmlFor="">Email</label>
-        <input
-          type="email"
-          value={email}
-          placeholder="Email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
+            <label htmlFor="">Email</label>
+            <input
+              type="email"
+              value={email}
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
 
-        <label htmlFor="">Emergency Contact</label>
-        <input
-          type="text"
-          value={emergencyContact}
-          placeholder="Emergency Contact"
-          onChange={(e) => setEmergencyContact(e.target.value)}
-        />
+            <label htmlFor="">Emergency Contact</label>
+            <input
+              type="text"
+              value={emergencyContact}
+              placeholder="Emergency Contact"
+              onChange={(e) => setEmergencyContact(e.target.value)}
+            />
 
-        <label htmlFor="">Emergency Contact Phone Number</label>
-        <input
-          type="tel"
-          value={emergencyContactPhone}
-          placeholder="Emergency Contact Phone"
-          onChange={(e) => setEmergencyContactPhone(e.target.value)}
-        />
+            <label htmlFor="">Emergency Contact Phone Number</label>
+            <input
+              type="tel"
+              value={emergencyContactPhone}
+              placeholder="Emergency Contact Phone"
+              onChange={(e) => setEmergencyContactPhone(e.target.value)}
+            />
 
-        <button type="submit">Create Patient</button>
+            <Box sx={{ py: 2 }}>
+              <Button
+                color="primary"
+                size="medium"
+                type="submit"
+                variant="contained"
+              >
+                Create Patient
+              </Button>
+            </Box>
 
-        <div className="message">{message ? <p>{message}</p> : null}</div>
-      </form>
-    </div>
+            <div className="message">{message ? <p>{message}</p> : null}</div>
+          </form>
+        </Container>
+      </Box>
+    </>
   );
 };
 

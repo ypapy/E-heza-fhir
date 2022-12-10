@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from "react";
-import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import Button from "@mui/material/Button";
-// import { Phone } from '@mui/icons-material';
+import Head from "next/head";
+import NextLink from "next/link";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box, Button, Container } from "@mui/material";
 
-export default function ViewPatientDetails(props) {
+const ViewPatientDetails = (props) => {
   // const url = "http://localhost:63993/fhir/Patient/"
   const { id } = useParams();
   const [firstName, setFirstName] = useState("");
@@ -21,6 +22,7 @@ export default function ViewPatientDetails(props) {
   const [emergencyContactPhone, setEmergencyContactPhone] = useState("");
   const [city, setCity] = useState("");
   const [streetNo, setStreetNo] = useState("");
+
   useEffect(() => {
     const url = `http://localhost:63993/fhir/Patient/` + id;
     console.log(url);
@@ -41,147 +43,170 @@ export default function ViewPatientDetails(props) {
           response.data.contact[0].name.given[0].toUpperCase()
         );
         setEmergencyContactPhone(response.data.contact[0].telecom[0].value);
-
-        // console.log(phoneNumber)
-        // console.log(email)
       })
       .catch((err) => console.log(err));
     console.log(id);
   }, [firstName, email, id, phoneNumber]);
   return (
+    <>
+      <Head>
+        <title>Register New Patient</title>
+      </Head>
       <Box
-        component="form"
+        component="main"
         sx={{
-          "& .MuiTextField-root": { m: 1, width: "25ch" },
+          alignItems: "center",
+          display: "flex",
+          flexGrow: 1,
+          minHeight: "100%",
         }}
-        noValidate
-        autoComplete="off"
       >
-        <div className="header">
-          <h1>Patient Details</h1>
-        </div>
-        <div>
-          <TextField
-            id="standard-read-only-input"
-            label="FirstName"
-            InputProps={{
-              readOnly: true,
+        <Container maxWidth="sm">
+          <NextLink href="/" passHref>
+            <Button
+              component="a"
+              startIcon={<ArrowBackIcon fontSize="small" />}
+            >
+              All Patients
+            </Button>
+          </NextLink>
+          <Box
+            component="form"
+            sx={{
+              "& .MuiTextField-root": { m: 1, width: "25ch" },
             }}
-            variant="standard"
-            value={firstName}
-          />
-          <TextField
-            id="standard-read-only-input"
-            label="LastName"
-            InputProps={{
-              readOnly: true,
-            }}
-            variant="standard"
-            value={lastName}
-          />
-        </div>
-        <div>
-          <TextField
-            id="standard-read-only-input"
-            label="Gender"
-            InputProps={{
-              readOnly: true,
-            }}
-            variant="standard"
-            value={gender}
-          />
-          <TextField
-            id="standard-read-only-input"
-            label="BirthDate"
-            InputProps={{
-              readOnly: true,
-            }}
-            variant="standard"
-            value={birthDate}
-          />
-        </div>
+            noValidate
+            autoComplete="off"
+          >
+            <div className="header">
+              <h1>Patient Details</h1>
+            </div>
+            <div>
+              <TextField
+                id="standard-read-only-input"
+                label="FirstName"
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="standard"
+                value={firstName}
+              />
+              <TextField
+                id="standard-read-only-input"
+                label="LastName"
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="standard"
+                value={lastName}
+              />
+            </div>
+            <div>
+              <TextField
+                id="standard-read-only-input"
+                label="Gender"
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="standard"
+                value={gender}
+              />
+              <TextField
+                id="standard-read-only-input"
+                label="BirthDate"
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="standard"
+                value={birthDate}
+              />
+            </div>
 
-        <div>
-          <TextField
-            id="standard-read-only-input"
-            label="Phone number"
-            InputProps={{
-              readOnly: true,
-            }}
-            variant="standard"
-            value={phoneNumber}
-          />
-          <TextField
-            id="standard-read-only-input"
-            label="Email"
-            InputProps={{
-              readOnly: true,
-            }}
-            variant="standard"
-            value={email}
-          />
-        </div>
-        <div>
-          <TextField
-            id="standard-read-only-input"
-            label="Street"
-            InputProps={{
-              readOnly: true,
-            }}
-            variant="standard"
-            value={streetNo}
-          />
-          <TextField
-            id="standard-read-only-input"
-            label="City"
-            InputProps={{
-              readOnly: true,
-            }}
-            variant="standard"
-            value={city}
-          />
-          <TextField
-            id="standard-read-only-input"
-            label="District"
-            InputProps={{
-              readOnly: true,
-            }}
-            variant="standard"
-            value={district}
-          />
-          <TextField
-            id="standard-read-only-input"
-            label="State"
-            InputProps={{
-              readOnly: true,
-            }}
-            variant="standard"
-            value={state}
-          />
-        </div>
-        <div>
-          <TextField
-            id="standard-read-only-input"
-            label="Emergency Contact Person"
-            InputProps={{
-              readOnly: true,
-            }}
-            variant="standard"
-            value={emergencyContactName}
-          />
-          <TextField
-            id="standard-read-only-input"
-            label="Emergency Contact Phone"
-            InputProps={{
-              readOnly: true,
-            }}
-            variant="standard"
-            value={emergencyContactPhone}
-          />
-        </div>
-        <Button variant="contained" href="/CreateObservation/">
-          Record Observation
-        </Button>
+            <div>
+              <TextField
+                id="standard-read-only-input"
+                label="Phone number"
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="standard"
+                value={phoneNumber}
+              />
+              <TextField
+                id="standard-read-only-input"
+                label="Email"
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="standard"
+                value={email}
+              />
+            </div>
+            <div>
+              <TextField
+                id="standard-read-only-input"
+                label="Street"
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="standard"
+                value={streetNo}
+              />
+              <TextField
+                id="standard-read-only-input"
+                label="City"
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="standard"
+                value={city}
+              />
+              <TextField
+                id="standard-read-only-input"
+                label="District"
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="standard"
+                value={district}
+              />
+              <TextField
+                id="standard-read-only-input"
+                label="State"
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="standard"
+                value={state}
+              />
+            </div>
+            <div>
+              <TextField
+                id="standard-read-only-input"
+                label="Emergency Contact Person"
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="standard"
+                value={emergencyContactName}
+              />
+              <TextField
+                id="standard-read-only-input"
+                label="Emergency Contact Phone"
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="standard"
+                value={emergencyContactPhone}
+              />
+            </div>
+            <Button variant="contained" href="">
+              View Observations
+            </Button>
+          </Box>
+        </Container>
       </Box>
+    </>
   );
-}
+};
+export default ViewPatientDetails;

@@ -1,10 +1,12 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import PatientsInfoTable from "./PatientsInfoTable";
+import { Box, Button } from "@mui/material";
 
 const GetAllPatients = () => {
   const url = "http://localhost:63993/fhir/Patient";
   const [patients, setPatients] = useState([]);
+
   useEffect(() => {
     axios
       .get(url)
@@ -17,11 +19,17 @@ const GetAllPatients = () => {
 
   return (
     <>
-      <div className="register-patient">
-        <a href="./CreatePatient">
-          <button>Register New Patient</button>
-        </a>
-      </div>
+      <Box sx={{ py: 2 }}>
+        <Button
+          href="./CreatePatient"
+          color="primary"
+          size="medium"
+          type="submit"
+          variant="contained"
+        >
+          Register New Patient
+        </Button>
+      </Box>
 
       {patients.length !== 0 && <PatientsInfoTable patients={patients} />}
     </>

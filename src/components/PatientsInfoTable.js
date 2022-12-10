@@ -1,13 +1,13 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell, { tableCellClasses } from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import Button from "@mui/material/Button";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -20,34 +20,24 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
-  '&:nth-of-type(odd)': {
+  "&:nth-of-type(odd)": {
     backgroundColor: theme.palette.action.hover,
   },
   // hide last border
-  '&:last-child td, &:last-child th': {
+  "&:last-child td, &:last-child th": {
     border: 0,
   },
 }));
 
-// function createData(name, calories, fat, carbs, protein) {
-//   return { name, calories, fat, carbs, protein };
-// }
-
-
-
-
 export default function PatientsInfoTable(props) {
   const [rows, setRows] = React.useState([]);
   React.useEffect(() => {
-    // console.log(props)
-
-    setRows(props["patients"])
-    console.log(rows)
-  }, [props, rows])
-
+    setRows(props["patients"]);
+    console.log(rows);
+  }, [props, rows]);
 
   return (
-    <TableContainer className='tablePatients' component={Paper}>
+    <TableContainer className="tablePatients" component={Paper}>
       <Table>
         <TableHead>
           <TableRow>
@@ -56,22 +46,41 @@ export default function PatientsInfoTable(props) {
             <StyledTableCell>Last Name</StyledTableCell>
             <StyledTableCell></StyledTableCell>
             <StyledTableCell>Details</StyledTableCell>
+            <StyledTableCell>Oberservation</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.length > 0 && rows.map((row) => (
-            <StyledTableRow key={row.resource.id}>
-              <StyledTableCell component="th" scope="row">
-                {row.resource.name[0].given[0].toUpperCase()}
-              </StyledTableCell>
-              <StyledTableCell></StyledTableCell>
-              <StyledTableCell component="th" scope="row">
-                {row.resource.name[0].family.toUpperCase()}
-              </StyledTableCell>
-              <StyledTableCell></StyledTableCell>
-              <StyledTableCell> <Button href={`patientDetails/${row.resource.id}`} variant="contained">View details</Button></StyledTableCell>
-            </StyledTableRow>
-          ))}
+          {rows.length > 0 &&
+            rows.map((row) => (
+              <StyledTableRow key={row.resource.id}>
+                <StyledTableCell component="th" scope="row">
+                  {row.resource.name[0].given[0].toUpperCase()}
+                </StyledTableCell>
+                <StyledTableCell></StyledTableCell>
+                <StyledTableCell component="th" scope="row">
+                  {row.resource.name[0].family.toUpperCase()}
+                </StyledTableCell>
+                <StyledTableCell></StyledTableCell>
+                <StyledTableCell>
+                  {" "}
+                  <Button
+                    href={`patientDetails/${row.resource.id}`}
+                    variant="contained"
+                  >
+                    View details
+                  </Button>
+                </StyledTableCell>
+                <StyledTableCell>
+                  {" "}
+                  <Button
+                    href={`CreateObservation/${row.resource.id}`}
+                    variant="contained"
+                  >
+                    Create Observation
+                  </Button>
+                </StyledTableCell>
+              </StyledTableRow>
+            ))}
         </TableBody>
       </Table>
     </TableContainer>

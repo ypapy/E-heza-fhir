@@ -1,9 +1,16 @@
 import { useState } from "react";
+import { useParams } from "react-router-dom";
+import Head from "next/head";
+import NextLink from "next/link";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import { Box, Button, Container } from "@mui/material";
 
 const RecordHeight = () => {
   const [height, setHeight] = useState("");
   const [message, setMessage] = useState("");
-  const [id, setId] = useState("");
+  const { id } = useParams();
+
+  const reference = "Patient/" + id;
 
   let handleSubmit = async (e) => {
     e.preventDefault();
@@ -12,52 +19,50 @@ const RecordHeight = () => {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
-            "resourceType": "Observation",
-            "id": "body-height",
-            "meta": {
-                "profile": [
-                    "http://hl7.org/fhir/StructureDefinition/vitalsigns"
-                ]
-            },
-            "status": "final",
-            "category": [
+          resourceType: "Observation",
+          id: "body-height",
+          meta: {
+            profile: ["http://hl7.org/fhir/StructureDefinition/vitalsigns"],
+          },
+          status: "final",
+          category: [
+            {
+              coding: [
                 {
-                    "coding": [
-                        {
-                            "system": "http://terminology.hl7.org/CodeSystem/observation-category",
-                            "code": "vital-signs",
-                            "display": "Vital Signs"
-                        }
-                    ],
-                    "text": "Vital Signs"
-                }
+                  system:
+                    "http://terminology.hl7.org/CodeSystem/observation-category",
+                  code: "vital-signs",
+                  display: "Vital Signs",
+                },
+              ],
+              text: "Vital Signs",
+            },
+          ],
+          code: {
+            coding: [
+              {
+                system: "http://loinc.org",
+                code: "8302-2",
+                display: "Body height",
+              },
             ],
-            "code": {
-                "coding": [
-                    {
-                        "system": "http://loinc.org",
-                        "code": "8302-2",
-                        "display": "Body height"
-                    }
-                ],
-                "text": "Body height"
-            },
-            "subject": {
-                "reference": "Patient"/id
-            },
-            "effectiveDateTime": "2022-07-02",
-            "valueQuantity": {
-                "value": height,
-                "unit": "in",
-                "system": "http://unitsofmeasure.org",
-                "code": "[in_i]"
-            }
+            text: "Body height",
+          },
+          subject: {
+            reference: reference,
+          },
+          effectiveDateTime: "2022-07-02",
+          valueQuantity: {
+            value: height,
+            unit: "in",
+            system: "http://unitsofmeasure.org",
+            code: "[in_i]",
+          },
         }),
       });
 
       if (res.status === 201) {
         setHeight("");
-        setId("");
         setMessage("Success");
       } else {
         setMessage("Some error occured");
@@ -68,22 +73,55 @@ const RecordHeight = () => {
   };
 
   return (
-    <div className="record-temperature">
-      <h1>Enter Height Value</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="">Height</label>
-        <input
-          type="text"
-          value={height}
-          placeholder="Temperature"
-          onChange={(e) => setHeight(e.target.value)}
-        />
+    <>
+      <Head>
+        <title>Height</title>
+      </Head>
+      <Box
+        component="main"
+        sx={{
+          alignItems: "center",
+          display: "flex",
+          flexGrow: 1,
+          minHeight: "100%",
+        }}
+      >
+        <Container maxWidth="sm">
+          <NextLink href="/" passHref>
+            <Button
+              component="a"
+              startIcon={<ArrowBackIcon fontSize="small" />}
+            >
+              All Patients
+            </Button>
+          </NextLink>
 
-        <button type="submit">Submit</button>
+          <h1>Enter Height Value</h1>
+          <form onSubmit={handleSubmit}>
+            <label htmlFor="">Height</label>
+            <input
+              type="text"
+              value={height}
+              placeholder="Height"
+              onChange={(e) => setHeight(e.target.value)}
+            />
 
-        <div className="message">{message ? <p>{message}</p> : null}</div>
-      </form>
-    </div>
+<Box sx={{ py: 2 }}>
+              <Button
+                color="primary"
+                size="medium"
+                type="submit"
+                variant="contained"
+              >
+                Submit
+              </Button>
+            </Box>
+
+            <div className="message">{message ? <p>{message}</p> : null}</div>
+          </form>
+        </Container>
+      </Box>
+    </>
   );
 };
 
