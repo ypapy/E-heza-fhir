@@ -4,7 +4,7 @@ import PatientsInfoTable from "./PatientsInfoTable";
 import { Box, Button } from "@mui/material";
 
 const GetAllPatients = () => {
-  const url = "http://localhost:63993/fhir/Patient";
+  const url = "http://localhost:56869/fhir/Patient";
   const [patients, setPatients] = useState([]);
 
   useEffect(() => {

@@ -73,10 +73,10 @@ export default function PatientsInfoTable(props) {
                 <StyledTableCell>
                   {" "}
                   <Button
-                    href={`CreateObservation/${row.resource.id}`}
+                    href={`RecordObservation/${row.resource.id}`}
                     variant="contained"
                   >
-                    Create Observation
+                    Record Observation
                   </Button>
                 </StyledTableCell>
               </StyledTableRow>

@@ -22,7 +22,7 @@ const CreatePatient = () => {
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let res = await fetch("http://localhost:63993/fhir/Patient/", {
+      let res = await fetch("http://localhost:56869/fhir/Patient/", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -120,7 +120,7 @@ const CreatePatient = () => {
           </NextLink>
           <h1>Register Patient</h1>
           <form onSubmit={handleSubmit}>
-            <label htmlFor="">Name</label>
+            <label htmlFor="">First Names</label>
             <input
               type="text"
               value={firstName}
@@ -128,7 +128,7 @@ const CreatePatient = () => {
               onChange={(e) => setFirstName(e.target.value)}
             />
 
-            <label htmlFor="">Name</label>
+            <label htmlFor="">Last Name</label>
             <input
               type="text"
               value={lastName}
