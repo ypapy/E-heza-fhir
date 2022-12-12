@@ -50,7 +50,7 @@ const EditObservations = (props) => {
     axios
       .get(url)
       .then((response) => {
-        if (response.data.total > 0) {
+        if (response.data.entry.length > 0) {
           response.data.entry.forEach(element => {
             console.log("Same source")
             console.log(element.resource.id)

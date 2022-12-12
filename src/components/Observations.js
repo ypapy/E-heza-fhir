@@ -76,8 +76,8 @@ const Observations = () => {
     axios
       .get(url)
       .then((response) => {
-        console.log(response)
-        if (response.data.total > 0) {
+        console.log(response.data.total)
+        if (response.data.entry.length > 0) {
           setNoObservations(false)
           response.data.entry.forEach(element => {
             console.log(element)
@@ -152,7 +152,7 @@ const Observations = () => {
             autoComplete="off"
           >
             {noObservations ? <Typography>No observations recorded for {queryParams.name}</Typography> : <ViewPatientObservations observations={{ heartRate, height, weight, temperature }} name={queryParams.name} />}
-            {noObservations ?   <Button href={`/CreateObservation/${id}`} id="editObs" variant="contained" type="submit" >
+            {noObservations ?   <Button href={`/RecordObservation/${id}`} id="editObs" variant="contained" type="submit" >
               Take Observations for {queryParams.name}
             </Button> : <Button href={`/patientDetails/editObservations/${id}`} id="editObss" variant="contained" type="submit" >
               {description.toLowerCase()}

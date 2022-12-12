@@ -18,7 +18,7 @@ const RecordObservation = (props) => {
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let res = await fetch("http://localhost:56869/fhir/", {
+      let res = await fetch("http://localhost:8080/fhir/", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -71,7 +71,7 @@ const RecordObservation = (props) => {
               },
               request: {
                 method: "POST",
-                url: "http://localhost:56869/fhir/Observation/",
+                url: "Observation",
               },
             },
             {
@@ -120,7 +120,7 @@ const RecordObservation = (props) => {
               },
               request: {
                 method: "POST",
-                url: "http://localhost:56869/fhir/Observation/",
+                url: "Observation",
               },
             },
             {
@@ -169,7 +169,7 @@ const RecordObservation = (props) => {
               },
               request: {
                 method: "POST",
-                url: "http://localhost:56869/fhir/Observation/",
+                url: "Observation",
               },
             },
             {
@@ -218,7 +218,7 @@ const RecordObservation = (props) => {
               },
               request: {
                 method: "POST",
-                url: "http://localhost:56869/fhir/Observation/",
+                url: "Observation",
               },
             },
           ],
