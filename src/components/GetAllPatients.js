@@ -6,16 +6,19 @@ import { Box, Button } from "@mui/material";
 const GetAllPatients = () => {
   const url = "http://localhost:56869/fhir/Patient";
   const [patients, setPatients] = useState([]);
+  const [fetched, setFetched] = useState(false)
 
   useEffect(() => {
     axios
       .get(url)
       .then((response) => {
         setPatients(response.data.entry);
+        if(patients.length!==0)
+          setFetched(true)
         // console.log(patients)
       })
       .catch((err) => console.log(err));
-  }, [patients]);
+  }, [patients, ]);
 
   return (
     <>
@@ -31,7 +34,7 @@ const GetAllPatients = () => {
         </Button>
       </Box>
 
-      {patients.length !== 0 && <PatientsInfoTable patients={patients} />}
+      {fetched && <PatientsInfoTable patients={patients} />}
     </>
   );
 };

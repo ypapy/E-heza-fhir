@@ -34,7 +34,7 @@ export default function PatientsInfoTable(props) {
   React.useEffect(() => {
     setRows(props["patients"]);
     console.log(rows);
-  }, [props, rows]);
+  }, [rows]);
 
   return (
     <TableContainer className="tablePatients" component={Paper}>

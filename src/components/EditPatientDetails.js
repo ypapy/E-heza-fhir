@@ -6,8 +6,10 @@ import Head from "next/head";
 import NextLink from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Box, Button, Container } from "@mui/material";
+import { useNavigate } from "react-router-dom"
 
-const ViewPatientDetails = (props) => {
+const EditPatientDetails = (props) => {
+  const navigate = useNavigate()
   // const url = "http://localhost:63993/fhir/Patient/"
   const { id } = useParams();
   const [firstName, setFirstName] = useState("");
@@ -23,13 +25,74 @@ const ViewPatientDetails = (props) => {
   const [city, setCity] = useState("");
   const [streetNo, setStreetNo] = useState("");
 
-  useEffect(() => {
-    const url = `http://localhost:56869/fhir/Patient/` + id;
+  const url = `http://localhost:8080/fhir/Patient/` + id;
+  let handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+     fetch(url, {
+        method: "PUT",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({
+          resourceType: "Patient",
+          id,
+          active: true,
+          name: [
+            {
+              use: "official",
+              family: lastName,
+              given: [firstName],
+            },
+          ],
+          telecom: [
+            {
+              system: "phone",
+              value: phoneNumber,
+              use: "mobile",
+            },
+            {
+              system: "email",
+              value: email,
+            },
+          ],
+          gender: gender,
+          birthDate: birthDate,
+          address: [
+            {
+              use: "home",
+              line: [streetNo],
+              city: city,
+              district: district,
+              state: state,
+            },
+          ],
+          contact: [
+            {
+              name: {
+                given: [emergencyContactName],
+              },
+              telecom: [
+                {
+                  system: "phone",
+                  value: emergencyContactPhone,
+                },
+              ],
+            },
+          ],
+        }),
+      })
+      .then(response=> navigate(-1) );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
+  useEffect(() => {
+   
     console.log(url);
     axios
       .get(url)
       .then((response) => {
+        console.log(response.data)
         setFirstName(response.data.name[0].given[0].toUpperCase());
         setLastName(response.data.name[0].family.toUpperCase());
         setGender(response.data.gender);
@@ -41,13 +104,13 @@ const ViewPatientDetails = (props) => {
         setEmail(response.data.telecom[1].value);
         setDistrict(response.data.address[0].district.toUpperCase());
         setEmergencyContactName(
-          response.data.contact[0].name.given[0].toUpperCase()
+          response.data.name[0].given[0].toUpperCase()
         );
         setEmergencyContactPhone(response.data.contact[0].telecom[0].value);
       })
       .catch((err) => console.log(err));
     console.log(id);
-  }, [firstName, email, id, phoneNumber]);
+  }, []);
   return (
     <>
       <Head>
@@ -84,128 +147,90 @@ const ViewPatientDetails = (props) => {
             </div>
             <div>
               <TextField
-                id="standard-read-only-input"
                 label="FirstName"
-                InputProps={{
-                  readOnly: true,
-                }}
                 variant="standard"
                 value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
               />
               <TextField
-                id="standard-read-only-input"
                 label="LastName"
-                InputProps={{
-                  readOnly: true,
-                }}
                 variant="standard"
                 value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
               />
             </div>
             <div>
               <TextField
-                id="standard-read-only-input"
                 label="Gender"
-                InputProps={{
-                  readOnly: true,
-                }}
                 variant="standard"
                 value={gender}
+                onChange={(e) => setGender(e.target.value)}
               />
               <TextField
-                id="standard-read-only-input"
                 label="BirthDate"
-                InputProps={{
-                  readOnly: true,
-                }}
                 variant="standard"
                 value={birthDate}
+                onChange={(e) => setBirthDate(e.target.value)}
               />
             </div>
 
             <div>
               <TextField
-                id="standard-read-only-input"
                 label="Phone number"
-                InputProps={{
-                  readOnly: true,
-                }}
                 variant="standard"
                 value={phoneNumber}
+                onChange={(e) => setphoneNumber(e.target.value)}
               />
               <TextField
-                id="standard-read-only-input"
                 label="Email"
-                InputProps={{
-                  readOnly: true,
-                }}
                 variant="standard"
                 value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
               <TextField
                 id="standard-read-only-input"
                 label="Street"
-                InputProps={{
-                  readOnly: true,
-                }}
                 variant="standard"
                 value={streetNo}
+                onChange={(e) => setStreetNo(e.target.value)}
               />
               <TextField
-                id="standard-read-only-input"
                 label="City"
-                InputProps={{
-                  readOnly: true,
-                }}
+                onChange={(e) => setCity(e.target.value)}
                 variant="standard"
                 value={city}
               />
               <TextField
-                id="standard-read-only-input"
                 label="District"
-                InputProps={{
-                  readOnly: true,
-                }}
                 variant="standard"
                 value={district}
+                onChange={(e) => setDistrict(e.target.value)}
               />
               <TextField
-                id="standard-read-only-input"
                 label="State"
-                InputProps={{
-                  readOnly: true,
-                }}
                 variant="standard"
                 value={state}
+                onChange={(e) => setState(e.target.value)}
               />
             </div>
             <div>
               <TextField
-                id="standard-read-only-input"
                 label="Emergency Contact Person"
-                InputProps={{
-                  readOnly: true,
-                }}
                 variant="standard"
                 value={emergencyContactName}
+                onChange={(e) => setEmergencyContactName(e.target.value)}
               />
               <TextField
-                id="standard-read-only-input"
                 label="Emergency Contact Phone"
-                InputProps={{
-                  readOnly: true,
-                }}
                 variant="standard"
                 value={emergencyContactPhone}
+                onChange={(e) => setEmergencyContactPhone(e.target.value)}
               />
             </div>
-            <Button variant="contained"  href={`ViewObservation/${id}?name=${firstName}`}>
-              View Observations
-            </Button>
-            <Button variant="contained"  href={`edit/${id}?name=${firstName}`}>
-              Edit Patient info
+            <Button variant="contained" href="#" onClick={handleSubmit}>
+              Save
             </Button>
           </Box>
         </Container>
@@ -213,4 +238,4 @@ const ViewPatientDetails = (props) => {
     </>
   );
 };
-export default ViewPatientDetails;
+export default EditPatientDetails;
