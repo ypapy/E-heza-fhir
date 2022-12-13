@@ -24,7 +24,7 @@ const ViewPatientDetails = (props) => {
   const [streetNo, setStreetNo] = useState("");
 
   useEffect(() => {
-    const url = `http://localhost:8080/fhir/Patient/` + id;
+    const url = `http://localhost:56869/fhir/Patient/` + id;
 
     console.log(url);
     axios

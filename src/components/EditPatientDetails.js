@@ -25,7 +25,7 @@ const EditPatientDetails = (props) => {
   const [city, setCity] = useState("");
   const [streetNo, setStreetNo] = useState("");
 
-  const url = `http://localhost:8080/fhir/Patient/` + id;
+  const url = `http://localhost:56869/fhir/Patient/` + id;
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {

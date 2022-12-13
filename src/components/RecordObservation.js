@@ -18,7 +18,7 @@ const RecordObservation = (props) => {
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let res = await fetch("http://localhost:8080/fhir/", {
+      let res = await fetch("http://localhost:56869/fhir/", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -203,14 +203,14 @@ const RecordObservation = (props) => {
                       display: "Body Weight",
                     },
                   ],
-                  text: "Body temperature",
+                  text: "Body weight",
                 },
                 subject: {
                   reference: reference,
                 },
                 effectiveDateTime: "2022-07-02",
                 valueQuantity: {
-                  value: temperature,
+                  value: weight,
                   unit: "lbs",
                   system: "http://unitsofmeasure.org",
                   code: "[lb_av]",

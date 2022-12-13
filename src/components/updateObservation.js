@@ -1,11 +1,11 @@
 import axios from "axios";
 
 const updateObservation = (id, value, textValue, reference) => {
-    const url = "http://localhost:8080/fhir/Observation/"+id
+    const url = "http://localhost:56869/fhir/Observation/"+id
     console.log(id)
     console.log(url)
     if(id===0) {
-        fetch("http://localhost:8080/fhir/Observation/", {
+        fetch("http://localhost:56869/fhir/Observation/", {
             method: "POST",
             headers: { "content-type": "application/json" },
             body: JSON.stringify({

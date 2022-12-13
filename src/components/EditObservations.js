@@ -7,78 +7,82 @@ import NextLink from "next/link";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import { Box, Button, Container } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import queryString from "query-string"
+import queryString from "query-string";
 import updateObservation from "./updateObservation";
 import { useNavigate } from "react-router-dom";
 
 const EditObservations = (props) => {
   // const url = "http://localhost:63993/fhir/Patient/"
   const { id } = useParams();
-  const queryParams = queryString.parse(window.location.search)
+  const queryParams = queryString.parse(window.location.search);
   // const { name } = props
-  const { name } = props
-  const [heartRate, setHeartRate] = useState(0)
-  const [height, setHeight] = useState(0)
-  const [weight, setWeight] = useState(0)
-  const [temperature, setTemperature] = useState(0)
-  const [heartRateId, setHeartRateId] = useState(0)
-  const [weightId, setWeightId] = useState(0)
-  const [heightId, setHeightId] = useState(0)
-  const [temperatureId, setTemperatureId] = useState(0)
-  const baseUrl = "http://localhost:8080/fhir/Observation/"
-  const { trackChanges } = props
-  const navigate = useNavigate()
-  console.log(props)
-  console.log(trackChanges)
+  const { name } = props;
+  const [heartRate, setHeartRate] = useState(0);
+  const [height, setHeight] = useState(0);
+  const [weight, setWeight] = useState(0);
+  const [temperature, setTemperature] = useState(0);
+  const [heartRateId, setHeartRateId] = useState(0);
+  const [weightId, setWeightId] = useState(0);
+  const [heightId, setHeightId] = useState(0);
+  const [temperatureId, setTemperatureId] = useState(0);
+  const baseUrl = "http://localhost:56869/fhir/Observation/";
+  const { trackChanges } = props;
+  const navigate = useNavigate();
+  console.log(props);
+  console.log(trackChanges);
   let handleSubmit = async (e) => {
-    console.log("Confirmation ++++++++++")
-    console.log(heightId)
-    let reference = "Patient/" + id
-    console.log(heightId)
-    console.log(heartRateId)
-    console.log(weightId)
-    console.log(temperatureId)
-    updateObservation(heightId, height, "Body height", reference)
-    updateObservation(heartRateId, heartRate, "Body heartRate", reference)
-    updateObservation(weightId, weight, "Body weight", reference)
-    updateObservation(temperatureId, temperature, "Body temperature", reference)
-    navigate(-1)
-   }
+    console.log("Confirmation ++++++++++");
+    console.log(heightId);
+    let reference = "Patient/" + id;
+    console.log(heightId);
+    console.log(heartRateId);
+    console.log(weightId);
+    console.log(temperatureId);
+    updateObservation(heightId, height, "Body height", reference);
+    updateObservation(heartRateId, heartRate, "heart rate", reference);
+    updateObservation(weightId, weight, "Body weight", reference);
+    updateObservation(
+      temperatureId,
+      temperature,
+      "Body temperature",
+      reference
+    );
+    navigate(-1);
+  };
   useEffect(() => {
-    const url = `http://localhost:8080/fhir/Observation?subject=Patient/` + id;
+    const url = `http://localhost:56869/fhir/Observation?subject=Patient/` + id;
     // console.log(url);
     axios
       .get(url)
       .then((response) => {
         if (response.data.entry.length > 0) {
-          response.data.entry.forEach(element => {
-            console.log("Same source")
-            console.log(element.resource.id)
+          response.data.entry.forEach((element) => {
+            console.log("Same source");
+            console.log(element.resource.id);
             if (element.resource.code.text.toLowerCase() === "body height") {
-              setHeight(element.resource.valueQuantity.value)
-              setHeightId(element.resource.id)
+              setHeight(element.resource.valueQuantity.value);
+              setHeightId(element.resource.id);
             }
-            if (element.resource.code.text.toLowerCase() === "body temperature") {
-              setTemperature(element.resource.valueQuantity.value)
-              setTemperatureId(element.resource.id)
-
+            if (
+              element.resource.code.text.toLowerCase() === "body temperature"
+            ) {
+              setTemperature(element.resource.valueQuantity.value);
+              setTemperatureId(element.resource.id);
             }
-            if (element.resource.code.text.toLowerCase() === "body heartrate") {
-              setHeartRate(element.resource.valueQuantity.value)
-              setHeartRateId(element.resource.id)
+            if (element.resource.code.text.toLowerCase() === "heart rate") {
+              setHeartRate(element.resource.valueQuantity.value);
+              setHeartRateId(element.resource.id);
 
-              console.log(element)
-              console.log("My friend no excuse!")
-              console.log(heartRate)
+              console.log(element);
+              console.log("My friend no excuse!");
+              console.log(heartRate);
             }
             if (element.resource.code.text.toLowerCase() === "body weight") {
-              setWeight(element.resource.valueQuantity.value)
-              setWeightId(element.resource.id)
+              setWeight(element.resource.valueQuantity.value);
+              setWeightId(element.resource.id);
             }
           });
         }
-
-
       })
       .catch((err) => console.log(err));
     // console.log(id);
@@ -119,7 +123,6 @@ const EditObservations = (props) => {
               <Typography variant="h6" component="h5">
                 Edit Observations for {name}
               </Typography>
-
             </div>
             <div>
               <TextField

@@ -22,7 +22,7 @@ const CreatePatient = () => {
   let handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      let res = await fetch("http://localhost:8080/fhir/Patient/", {
+      let res = await fetch("http://localhost:56869/fhir/Patient/", {
         method: "POST",
         headers: { "content-type": "application/json" },
         body: JSON.stringify({
@@ -73,7 +73,7 @@ const CreatePatient = () => {
         }),
       });
 
-      if (res.status === "201 Created") {
+      if (res.status == "201") {
         setFirstName("");
         setLastName("");
         setGender("");
@@ -114,7 +114,8 @@ const CreatePatient = () => {
             <Button
               component="a"
               startIcon={<ArrowBackIcon fontSize="small" />}
-              href="/" passHref
+              href="/"
+              passHref
             >
               All Patients
             </Button>
